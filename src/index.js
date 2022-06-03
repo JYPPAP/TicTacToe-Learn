@@ -12,6 +12,10 @@ function Square (props) {
 
 class Board extends React.Component {
   renderSquare(i) {
+    console.log("renderSquare(i) THIS");
+    console.dir(this);
+    console.log(this);
+    console.dir("");
     return (
       <Square 
         value={this.props.squares[i]}
@@ -63,6 +67,8 @@ class Game extends React.Component {
       return
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
+    console.log("handleClick(i) THIS");
+    console.log(this);
     this.setState({
       history: history.concat([{
         squares: squares,
@@ -70,15 +76,29 @@ class Game extends React.Component {
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
     });
+    for(let i = 0; i < history.length; i++) {
+      console.log(this.state.history[i].squares);
+    }
+    console.log(this.state.stepNumber);
+    console.log(this.state.xIsNext);
   }
 
   jumpTo(step) {
+    console.log("jumpTo(step) THIS");
+    console.log(this);
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
     });
+
+    console.log("Jump To Step " + step);
+    console.log(this.state.stepNumber);
+    console.log(this.state.xIsNext);
   }
 
+  /* React는 다시 만든다.
+  그래서 map을 이용해서 전부 다시 만드는 방향으로 했다.
+   */
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
